@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ticket Status Update</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      padding: 30px;
+    }
+
+    .email-wrapper {
+      max-width: 600px;
+      margin: auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      padding: 20px 30px;
+    }
+
+    .email-header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .ticket-details {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    .ticket-details p {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+
+    .status-resolved {
+      background-color: #28a745;
+      color: white;
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    .status-closed {
+      background-color: #dc3545;
+      color: white;
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .highlight {
+      font-weight: 600;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-header">
+		Avyaya E-We Power Solutions Pvt Ltd
+    </div>
+
+    <p>Hello <span class="highlight" th:text="${name}">User</span>,</p>
+
+    <p>We’re writing to inform you about the latest update regarding your support ticket:</p>
+
+    <div class="ticket-details">
+      <p><strong>Ticket ID:</strong> <span th:text="${ticketId}">#12345</span></p>
+      <p><strong>Subject:</strong> <span th:text="${ticketSubject}">Issue with account access</span></p>
+      <p><strong>Status:</strong>
+        <span th:if="${#strings.equalsIgnoreCase(status, 'resolved')}" class="status-resolved">Resolved</span>
+        <span th:if="${#strings.equalsIgnoreCase(status, 'closed')}" class="status-closed">Closed</span>
+      </p>
+      <p><strong>Resolution Date:</strong> <span th:text="${resolutionDate}">May 10, 2025</span></p>
+    </div>
+
+    <p th:if="${#strings.equalsIgnoreCase(status,'resolved')}">
+      The issue has been successfully resolved. Here's what was done:
+    </p>
+    <p th:if="${#strings.equalsIgnoreCase(status,'closed')}">
+      The ticket has been closed. Details of the resolution:
+    </p>
+
+    <p>
+      Our support team has reviewed and addressed your concern. If you need further assistance, feel free to <a href="mailto:support@avyaya.com">contact us</a>.
+    </p>
+
+    <p class="footer">
+      Thank you,<br>
+      <strong>Avyaya E-We Power Solutions Pvt Ltd Team</strong>
+    </p>
+  </div>
+</body>
+</html>
