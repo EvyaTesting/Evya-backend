@@ -1,16 +1,12 @@
 package com.ewe.config;
 
 import java.io.IOException;
-
 import java.util.Locale;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -26,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 @ComponentScan({ "com.ewe.controller" })
 public class WebMvcConfig implements WebMvcConfigurer {
-
 	@Bean
 	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
 		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
@@ -53,7 +48,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver getResolver() throws IOException {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-		resolver.setMaxUploadSize(5242880);// 0.5MB
+		resolver.setMaxUploadSize(5242880);
 		return resolver;
 	}
 
@@ -61,5 +56,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+	    registry.addMapping("/**")
+	            .allowedOrigins("*")
+	            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+	            .allowedHeaders("*");
+	}		
 }

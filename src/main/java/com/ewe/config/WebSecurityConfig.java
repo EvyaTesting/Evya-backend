@@ -1,7 +1,6 @@
 package com.ewe.config;
 
 import java.util.Arrays;
-
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -35,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowedOrigins(Collections.singletonList("*")); // Allow frontend origin
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow all needed methods
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
-        configuration.setAllowCredentials(true);  // If you are using cookies or auth headers
+        configuration.setAllowCredentials(false);  // If you are using cookies or auth headers
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
