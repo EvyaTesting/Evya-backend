@@ -23,7 +23,7 @@ public class WelcomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<ResponseMessage> welcome() throws UserNotFoundException {
-		String msg = "Welcome To EVYA-BACKEND-SERVER";
+		String msg = "Welcome To EVYA-BACKEND";
 
 		// logger.info("WelcomeController.welcome() - msg [" + msg + "]");
 
