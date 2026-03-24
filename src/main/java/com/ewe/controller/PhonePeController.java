@@ -15,7 +15,7 @@ import com.ewe.pojo.PhonePeTokenResponse;
 import com.ewe.service.PhonePeService;
 
 @RestController
-@RequestMapping("/api/phonepe")
+@RequestMapping("/api/mobile")
 public class PhonePeController {
 
     private final PhonePeService phonePeService;
