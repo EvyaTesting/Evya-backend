@@ -289,7 +289,7 @@ public class MobileAPIController {
 	    }
 	}
 	
-	@ApiOperation(value = "Get the EV vehicle based on user ID")
+@ApiOperation(value = "Get the EV vehicle based on user ID")
 	@RequestMapping(value = "/myEV/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponse<List<Vehicles>>> getMyEV(@PathVariable long userId) {
 	    try {
@@ -311,7 +311,6 @@ public class MobileAPIController {
 	        );
 	    }
 	}
-
 	@ApiOperation(value = "Get the wallet details based on user ID")
 	@RequestMapping(value = "/walletDetails/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<ApiResponse<List<Accounts>>> getWalletDetails(@PathVariable long userId) throws UserNotFoundException {
