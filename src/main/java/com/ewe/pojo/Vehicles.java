@@ -1,13 +1,4 @@
 package com.ewe.pojo;
-
-
-
-
-package com.ewe.pojo;
-
-
-
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
