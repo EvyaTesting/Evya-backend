@@ -452,7 +452,10 @@ public List<Map<String, Object>> VerifyOtp(String otp) {
 //	    return result;
 //	}
 	
-	@Override
+
+
+
+@Override
 	public List<Map<String, Object>> addEV(VehicleForm vehicleForm) throws UserNotFoundException {
 
 	    List<Map<String, Object>> result = new ArrayList<>();
@@ -463,6 +466,15 @@ public List<Map<String, Object>> VerifyOtp(String otp) {
 
 	    if (user != null) {
 	        try {
+	            // Fetch the variant by ID first
+	            EV_Variants variant = generalDao.findOneById(new EV_Variants(), vehicleForm.getVariantId());
+	            
+	            if (variant == null) {
+	                value.put("status", "Error: Variant not found with ID: " + vehicleForm.getVariantId());
+	                value.put("success", false);
+	                result.add(value);
+	                return result;
+	            }
 
 	            Vehicles vehicle = new Vehicles();
 
@@ -471,12 +483,14 @@ public List<Map<String, Object>> VerifyOtp(String otp) {
 	            vehicle.setDescription(vehicleForm.getDescription());
 	            vehicle.setRegistrationNo(vehicleForm.getRegistrationNo());
 	            vehicle.setUser(user);
-
-	            // Make, Model, Variant manually from request
+	            
+	            // Set make, model, year
 	            vehicle.setMake(vehicleForm.getMake());
-	            vehicle.setVariant(vehicleForm.getVariant());
 	            vehicle.setModel(vehicleForm.getModel());
 	            vehicle.setYear(vehicleForm.getYear());
+	            
+	            // Set the variant object (not the ID)
+	            vehicle.setVariant(variant);  // ✅ CORRECT
 
 	            // VIN optional
 	            if (vehicleForm.getVin() != null && !vehicleForm.getVin().trim().isEmpty()) {
@@ -489,33 +503,40 @@ public List<Map<String, Object>> VerifyOtp(String otp) {
 	            generalDao.save(vehicle);
 
 	            value.put("status", "EV Added Successfully");
+	            value.put("success", true);
 	            value.put("Make", vehicleForm.getMake());
 	            value.put("Model", vehicleForm.getModel());
-	            value.put("Variant", vehicleForm.getVariant());
-	            value.put("ModelYear", vehicleForm.getYear());
-	            value.put("VIN", vehicle.getVin());
+	            value.put("Variant", variant.getVariantName());  // Get variant name from the object
+	            value.put("VariantId", vehicleForm.getVariantId());
+	            
+	            result.add(value);
 
 	        } catch (Exception e) {
-	            value.put("status", "Failed to add vehicle: " + e.getMessage());
+	            e.printStackTrace();
+	            value.put("status", "Error adding EV: " + e.getMessage());
+	            value.put("success", false);
+	            result.add(value);
 	        }
-
 	    } else {
-	        value.put("status", "User Id Invalid");
+	        value.put("status", "User not found with ID: " + vehicleForm.getUserId());
+	        value.put("success", false);
+	        result.add(value);
 	    }
 
-	    result.add(value);
 	    return result;
 	}
 
+	@Transactional
 	@Override
 	public List<Vehicles> getMyEVG(long userId) {
-		try {
-			return generalDao.findAllSQLQuery(new Vehicles(), "SELECT * FROM vehicles WHERE user_id = "+userId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-
+	    try {
+	        // Use HQL with JOIN FETCH to load variant eagerly
+	        String hql = "FROM Vehicles v LEFT JOIN FETCH v.variant WHERE v.user.id = ?1";
+	        return generalDao.findAllHQLQry(new Vehicles(), hql, userId);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new ArrayList<>();
+	    }
 	}
 
 //	@Override
