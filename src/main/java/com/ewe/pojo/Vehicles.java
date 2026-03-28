@@ -3,6 +3,11 @@ package com.ewe.pojo;
 
 
 
+package com.ewe.pojo;
+
+
+
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,16 +35,20 @@ public class Vehicles extends BaseEntity {
 	private String status;
 	private String vehicleType;
 	private String registrationNo;
-	private String variant;
-	public String getVariant() {
-		return variant;
-	}
-
-	public void setVariant(String variant) {
-		this.variant = variant;
-	}
-
+//	private String variant;
+	
+	private EV_Variants variant;
 	private User user;
+	
+	 @ManyToOne(fetch = FetchType.LAZY, targetEntity = EV_Variants.class)
+	    @JoinColumn(name = "variant_id")
+	    public EV_Variants getVariant() {
+	        return variant;
+	    }
+
+	    public void setVariant(EV_Variants variant) {
+	        this.variant = variant;
+	    }
 	
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
 	@JoinColumn(name = "user_id")
