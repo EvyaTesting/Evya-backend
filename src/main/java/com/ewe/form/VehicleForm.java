@@ -2,16 +2,17 @@ package com.ewe.form;
 
 public class VehicleForm {
 
+	
 	private String year;
 	private String make;
 	private String model;
-	private String variant;
 	private String connectorType;
 	private String vehicleType;
 	private String description;
 	private String vin;
 	private String registrationNo;
 	private long userId;
+	private long variantId;
 	
 	public String getYear() {
 		return year;
@@ -30,13 +31,6 @@ public class VehicleForm {
 	}
 	public void setModel(String model) {
 		this.model = model;
-	}
-	public String getVariant() {
-		return variant;
-	}
-
-	public void setVariant(String variant) {
-		this.variant = variant;
 	}
 	public String getConnectorType() {
 		return connectorType;
@@ -73,6 +67,13 @@ public class VehicleForm {
 	}
 	public void setRegistrationNo(String registrationNo) {
 		this.registrationNo = registrationNo;
+	}
+	
+	public long getVariantId() {
+		return variantId;
+	}
+	public void setVariantId(long variantId) {
+		this.variantId = variantId;
 	}
 	
 	
