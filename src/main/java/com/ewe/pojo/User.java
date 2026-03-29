@@ -76,6 +76,7 @@ public class User extends BaseEntity {
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	@JsonIgnore
 	public Set<Vehicles> getVehicle() {
 		return vehicle;
 	}
@@ -85,6 +86,7 @@ public class User extends BaseEntity {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	@JsonIgnore
 	public Set<Address> getAddress() {
 		return address;
 	}
@@ -94,6 +96,7 @@ public class User extends BaseEntity {
 	}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	@JsonIgnore
 	public Set<Password> getPasswords() {
 		return passwords;
 	}
@@ -103,6 +106,7 @@ public class User extends BaseEntity {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	@JsonIgnore
 	public Set<Accounts> getAccount() {
 		return account;
 	}
