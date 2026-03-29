@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "Users", uniqueConstraints = {@UniqueConstraint(columnNames = "mobileNumber"),@UniqueConstraint(columnNames = "email"),@UniqueConstraint(columnNames = "username")})
